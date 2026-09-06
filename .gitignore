@@ -1,0 +1,18 @@
+# 构建产物目录
+cpp/output/
+build/
+out/
+
+# 编译产物
+*.exe
+*.o
+*.obj
+*.out
+*.app
+*.ilk
+*.pdb
+
+# IDE / 编辑器
+.idea/
+.vs/
+.vscode/
