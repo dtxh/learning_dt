@@ -10,7 +10,7 @@ void StackInit(LinkStack &L) {
     L = nullptr;
 }
 
-bool StackEmpty(LinkStack L) {
+bool IsEmpty(LinkStack L) {
     if (L == nullptr) {
         return true;
     }
@@ -26,7 +26,7 @@ bool NodePush(LinkStack &L,int x) {
 }
 
 bool NodePop(LinkStack &L,int &x) {
-    if (StackEmpty(L)) {
+    if (IsEmpty(L)) {
         return false;
     }
     Node* p = L;
@@ -37,7 +37,7 @@ bool NodePop(LinkStack &L,int &x) {
 }
 
 bool StackGetTop(LinkStack L,int &x) {
-    if(StackEmpty(L)) {
+    if (IsEmpty(L)) {
         return false;
     }
     x = L->data;
@@ -67,7 +67,7 @@ int main() {
         cout << "本次pop的元素: " << x << endl;
     }
     StackDestroy(L);
-    if(StackEmpty(L)) {
+    if (IsEmpty(L)) {
         cout << "栈为空" << endl;
     }
     return 0;
