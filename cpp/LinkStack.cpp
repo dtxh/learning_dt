@@ -1,8 +1,10 @@
 #include<iostream>
+#include <cstring>
 using namespace std;
 
+typedef char ElemType;
 typedef struct Node {
-    int data;
+    ElemType data;
     Node *next;
 } Node, *LinkStack;
 
@@ -17,7 +19,7 @@ bool IsEmpty(LinkStack L) {
     return false;
 }
 
-bool NodePush(LinkStack &L,int x) {
+bool NodePush(LinkStack &L,ElemType x) {
     Node* p = new Node;
     p->data = x;
     p->next = L;
@@ -25,7 +27,7 @@ bool NodePush(LinkStack &L,int x) {
     return true;
 }
 
-bool NodePop(LinkStack &L,int &x) {
+bool NodePop(LinkStack &L,ElemType &x) {
     if (IsEmpty(L)) {
         return false;
     }
@@ -36,7 +38,7 @@ bool NodePop(LinkStack &L,int &x) {
     return true;
 }
 
-bool StackGetTop(LinkStack L,int &x) {
+bool StackGetTop(LinkStack L,ElemType &x) {
     if (IsEmpty(L)) {
         return false;
     }
@@ -52,24 +54,44 @@ void StackDestroy(LinkStack &L) {
     }
 }
 
-int main() {
+bool bracketCheck(char str[],int len) {
     LinkStack L;
     StackInit(L);
-    for(int i = 1;i <= 5;i++) {
-        NodePush(L,i);
+    for(int i=0;i<len;i++) {
+        if(str[i] == '(' || str[i] == '[' || str[i] == '{') {
+            NodePush(L,str[i]);
+            continue;
+        }
+        else {
+            if(IsEmpty(L)) {
+                return false;
+            }
+        }
+        ElemType s;
+        NodePop(L,s);
+        if(str[i] == ')' && s != '(') {
+            return false;
+        }
+        if(str[i] == ']' && s != '[') {
+            return false;
+        }
+        if(str[i] == '}' && s != '{') {
+            return false;
+        }   
     }
-    int top;
-    StackGetTop(L,top);
-    cout << "Top element: " << top << endl;
-    for(int i = 1;i <= 5;i++) {
-        int x;
-        NodePop(L,x);
-        cout << "本次pop的元素: " << x << endl;
+    if(!IsEmpty(L)) {
+        return false;
     }
-    StackDestroy(L);
-    if (IsEmpty(L)) {
-        cout << "栈为空" << endl;
-    }
+    return true;
+}
+
+int main() {
+    char str1[] = {"{[()]}([{}]){[(])}"};
+    char str2[] = {"{[()]}([{}])"};
+    int len1 = strlen(str1);
+    int len2 = strlen(str2);
+    cout<<bracketCheck(str1,len1)<<endl;
+    cout<<bracketCheck(str2,len2)<<endl;
     return 0;
 }
 
